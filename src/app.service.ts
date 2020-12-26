@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-
+import * as event_bus from './common/event-bus.json';
 
 @Injectable()
 export class AppService {
@@ -8,10 +8,10 @@ export class AppService {
   constructor(@Inject('EVENT_BUS') private eventbus: ClientProxy){}
 
   addToBus(req: any): void{
-    let path = req.path;
-    switch(path){
+    let transaction = req.transaction;
+    switch(transaction){
       case 'login':
-        this.eventbus.emit('test', 'LOGIN TASK');
+        this.eventbus.emit(event_bus.login.topic, event_bus.login.description);
         break;
       default:
         console.log('service not found');

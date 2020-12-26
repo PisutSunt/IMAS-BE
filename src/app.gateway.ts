@@ -1,6 +1,5 @@
 import { AppService } from './app.service';
-import { EventBusService } from './event-bus/event-bus.service';
-import { Logger, Inject } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { 
   MessageBody, 
   ConnectedSocket, 
@@ -36,4 +35,5 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     @ConnectedSocket() client: Socket): void {
     this.eventBus.addToBus(payload)
   }
+  
 }

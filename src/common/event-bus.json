@@ -1,0 +1,16 @@
+{
+    "login": {
+        "topic": "user-manager",
+        "description": {
+            "transaction": "login",
+            "services": "user-manager"
+        }
+    },
+    "auto-replier": {},
+    "map": {},
+    "notification-manager": {},
+    "queue": {},
+    "user-manager": {},
+    "treatment-plan": {}
+}
+

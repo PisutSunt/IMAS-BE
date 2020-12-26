@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EventBusModule } from './event-bus/event-bus.module';
 import { AppGateway } from './app.gateway';
 import { Transport, ClientsModule } from '@nestjs/microservices';
 
 @Module({
-  imports: [EventBusModule,
+  imports: [
    // Bind Kafka server and Nestjs together
    ClientsModule.register([
     {
@@ -21,7 +19,7 @@ import { Transport, ClientsModule } from '@nestjs/microservices';
     },
   ]),
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [AppGateway, AppService],
 })
 export class AppModule {}

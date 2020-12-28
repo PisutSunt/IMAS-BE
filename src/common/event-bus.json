@@ -6,10 +6,16 @@
             "services": "user-manager"
         }
     },
+    "queue": {
+        "topic": "queue",
+        "description": {
+            "transaction": "queue",
+            "services": "queue"
+        }
+    },
     "auto-replier": {},
     "map": {},
     "notification-manager": {},
-    "queue": {},
     "user-manager": {},
     "treatment-plan": {}
 }

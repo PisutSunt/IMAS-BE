@@ -7,10 +7,11 @@ export class ChatQueueController {
   constructor(private readonly chatQueueService: ChatQueueService) {}
 
   @EventPattern('queue')
-  async patientQueueHandler(data: Record<string, unknown>) {
+  async chatQueueHandler(data: Record<string, unknown>) {
     let user_info = data.value['payload'];
     let user_role = user_info.role;
     
+    //
     if( user_role == 'patient' )
     {
       this.chatQueueService.addPatientChatQueue(user_info)

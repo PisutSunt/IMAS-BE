@@ -1,12 +1,16 @@
 import { 
+  OnGatewayInit,
   SubscribeMessage, 
   WebSocketGateway, 
   WebSocketServer 
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io'
 
-@WebSocketGateway()
-export class ChatGateway {
+@WebSocketGateway({ transport: ['websocket'] })
+export class ChatGateway implements OnGatewayInit{
+  afterInit(server: any) {
+    throw new Error('Wait for any idea');
+  }
 
   @WebSocketServer()
   server: Server;

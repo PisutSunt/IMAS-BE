@@ -14,34 +14,52 @@ export class ChatHandlerService {
 
     constructor(@Inject('CHAT_HANDLER') private event_bus: Client) 
     {          
+        // Specify server properties
         const { Kafka } = require('kafkajs')
         const kafka = new Kafka({
             clientId: 'chat-queue',
             brokers: ['localhost:9092']
         })
 
-        this.pat_chat_handler = kafka.consumer({groupId: 'patient-chat-handler-group'})
-        this.doc_chat_handler = kafka.consumer({groupId: 'doctor-chat-handler-group'})
+        // Specify incoming message size
+        const AVG_MESSAGE_SIZE = 25 // bytes
+        const NUMBER_OF_MESSAGES_TO_RECEIVE = 1
+        const MAX_BYTES_PER_PARTITION = NUMBER_OF_MESSAGES_TO_RECEIVE * AVG_MESSAGE_SIZE
+        const MAX_BYTES = 32 * MAX_BYTES_PER_PARTITION
 
+        // Specify consumer's properties
+        this.pat_chat_handler = kafka.consumer({
+            groupId: 'patient-chat-handler-group',
+            maxBytesPerPartition: MAX_BYTES_PER_PARTITION,
+            maxBytes: MAX_BYTES
+        })
+        this.doc_chat_handler = kafka.consumer({
+            groupId: 'doctor-chat-handler-group',
+            maxBytesPerPartition: MAX_BYTES_PER_PARTITION,
+            maxBytes: MAX_BYTES
+        })
+
+        // Conect the consumer to Kafka server
         this.pat_chat_handler.connect();
         this.doc_chat_handler.connect();
 
-
+        // Subscribe topic
         this.pat_chat_handler.subscribe({topic: 'patient-chat-queue'});
         this.doc_chat_handler.subscribe({topic: 'doctor-chat-queue'});
 
-        this.pat_chat_handler.run({ eachMessage: async ({ topic, message }) => {
-            console.log("incoming doctor patient");
+        // Run patient chat queue handler Kafka consumer
+        this.pat_chat_handler.run({ eachBatch: async ({ batch }) => {
+            console.log("incoming patient req");
             this.pat_chat_handler.pause([{topic: 'patient-chat-queue'}]);
-            this.patientInfo = message.value.toString();
+            this.patientInfo = batch.messages[0].value.toString();
             this.createChat();
         }});
 
-        
-        this.doc_chat_handler.run({ eachMessage: async ({ topic, message }) => {
+        // Run doctor chat queue handler Kafka consumer
+        this.doc_chat_handler.run({ eachBatch: async ({ batch }) => {
             console.log("incoming doctor req");
             this.doc_chat_handler.pause([{topic: 'doctor-chat-queue'}]);
-            this.doctorInfo = message.value.toString();
+            this.doctorInfo = batch.messages[0].value.toString();
             this.createChat();
         }});
 
@@ -65,6 +83,7 @@ export class ChatHandlerService {
     //     }});
     // }
 
+    // Metod for chat creation
     createChat(){
 
         if(this.patientInfo != null) console.log(this.patientInfo)

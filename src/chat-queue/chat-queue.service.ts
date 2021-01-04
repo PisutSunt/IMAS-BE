@@ -8,13 +8,13 @@ export class ChatQueueService {
   // Add patient chat request to queue
   addPatientChatQueue(user_info) {
     let topic = 'patient-chat-queue'
-    this.chat_queue.emit(topic, 'cjOvfO9nsv5dB4RVAAAA')
+    this.chat_queue.emit(topic, 'cjOvfO9nsv5dB4RVAPAT')
   }
 
   // Add doctor chat request to queue
   addDoctorChatQueue(user_info) {
     let topic = 'doctor-chat-queue'
-    this.chat_queue.emit(topic, 'cjOvfO9nsv5dB4RVAAAB')
+    this.chat_queue.emit(topic, 'cjOvfO9nsv5dB4RVADOC')
   }
   
 }

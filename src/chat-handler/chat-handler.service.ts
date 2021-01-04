@@ -92,13 +92,13 @@ export class ChatHandlerService {
         if(this.doctorInfo != null) console.log(this.doctorInfo)
         else console.log('doctor info is null')
 
-        
+        // Match patient and doctor, then create an event to bus
         if(this.patientInfo != null && this.doctorInfo != null){
             console.log("create chat")
             let payload = { patientInfo: this.patientInfo,
                             doctorInfo: this.doctorInfo};
 
-            this.event_bus.emit('chat', 'payload');
+            this.event_bus.emit('chat', 'PAYLOAD');
 
             this.patientInfo = null;
             this.doctorInfo = null;

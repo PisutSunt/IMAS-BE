@@ -7,8 +7,8 @@ export class ChatQueueController {
   constructor(private readonly chatQueueService: ChatQueueService) {}
 
   @EventPattern('queue')
-  async chatQueueHandler(data: Record<string, unknown>) {
-    let user_info = data.value['payload'];
+  chatQueueHandler(req: Record<string, unknown>) {
+    let user_info = req.value['payload'];
     let user_role = user_info.role;
     
     //

@@ -1,17 +1,11 @@
 {
     "login": {
         "topic": "user-manager",
-        "description": {
-            "transaction": "login",
-            "services": "user-manager"
-        }
+        "transaction": "login"
     },
     "queue": {
         "topic": "queue",
-        "description": {
-            "transaction": "queue",
-            "services": "queue"
-        }
+        "transaction": "queue"
     },
     "auto-replier": {},
     "map": {},

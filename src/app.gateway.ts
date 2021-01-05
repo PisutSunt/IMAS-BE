@@ -10,6 +10,7 @@ import {
   WebSocketGateway 
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
+import { EventPattern } from '@nestjs/microservices';
 
 @WebSocketGateway()
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect{
@@ -33,7 +34,12 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   handleMessage(
     @MessageBody() payload: string,
     @ConnectedSocket() client: Socket): void {
-    this.eventBus.addToBus(payload)
+    this.eventBus.addToBus(payload);
+  }
+
+  @EventPattern('gateway')
+  sendBack(): void{
+    this.eventBus.sendToClient();
   }
   
 }

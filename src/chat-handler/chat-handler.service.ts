@@ -65,24 +65,6 @@ export class ChatHandlerService {
 
     }
 
-    // async waitDoctorAccept(){
-    //     console.log("incoming patient req 2");
-    //     await this.pat_chat_handler.run({ eachMessage: async ({ topic, message }) => {
-    //         console.log('aaa')
-    //         this.pat_chat_handler.pause([{topic: 'patient-chat-queue'}]);
-    //         console.log('AAA')
-    //         this.patientInfo = message.value.toString();
-    //     }});
-    // }
-
-    // async waitPatientRequest(){
-    //     console.log("incoming doctor req 2");
-    //     await this.doc_chat_handler.run({ eachMessage: async ({ topic, message }) => {
-    //         this.doc_chat_handler.pause([{topic: 'doctor-chat-queue'}]);
-    //         this.doctorInfo = message.value.toString();
-    //     }});
-    // }
-
     // Metod for chat creation
     createChat(){
 
@@ -95,10 +77,14 @@ export class ChatHandlerService {
         // Match patient and doctor, then create an event to bus
         if(this.patientInfo != null && this.doctorInfo != null){
             console.log("create chat")
-            let payload = { patientInfo: this.patientInfo,
-                            doctorInfo: this.doctorInfo};
+            let payload = { transaction: 'noti-doc-to-accept',
+                            payload: {
+                                patientInfo: this.patientInfo,
+                                doctorInfo: this.doctorInfo
+                            }
+                        }
 
-            this.event_bus.emit('chat', 'PAYLOAD');
+            this.event_bus.emit('notification-manager', payload);
 
             this.patientInfo = null;
             this.doctorInfo = null;

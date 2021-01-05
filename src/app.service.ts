@@ -9,16 +9,15 @@ export class AppService {
 
   // Add event to event-bus
   addToBus(req: any): void{
-    let transaction = req.transaction;
-    switch(transaction){
+    switch(req.transaction){
       case 'login':
-        var payload = event_bus.login.description
         var topic = event_bus.login.topic
+        var payload = event_bus.login.transaction
         break;
       case 'chat-queue':
-        var payload = event_bus.queue.description
-        payload['payload'] = req.payload
         var topic = event_bus.queue.topic
+        var payload = event_bus.queue.transaction
+        payload['payload'] = req.payload
         break;
       default:
         console.log('service not found');
@@ -26,4 +25,10 @@ export class AppService {
     }
     this.eventbus.emit(topic, payload);
   }
+
+  
+  sendToClient(){
+    
+  }
+
 }

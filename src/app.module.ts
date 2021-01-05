@@ -4,6 +4,7 @@ import { AppGateway } from './app.gateway';
 import { Transport, ClientsModule } from '@nestjs/microservices';
 import { ChatQueueModule } from './chat-queue/chat-queue.module';
 import { ChatHandlerModule } from './chat-handler/chat-handler.module';
+import { NotificationManagerModule } from './notification-manager/notification-manager.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ChatHandlerModule } from './chat-handler/chat-handler.module';
   ]),
    ChatQueueModule,
    ChatHandlerModule,
+   NotificationManagerModule,
   ],
   controllers: [],
   providers: [AppGateway, AppService],

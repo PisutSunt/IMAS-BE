@@ -1,0 +1,4 @@
+[submodule "the_internship"]
+	path = the_internship
+	url = https://github.com/PisutSunt/the_internship.git
+	branch = master

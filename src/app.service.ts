@@ -12,11 +12,11 @@ export class AppService {
     switch(req.transaction){
       case 'login':
         var topic = event_bus.login.topic
-        var payload = event_bus.login.transaction
+        var payload = {transaction: event_bus.queue.transaction};
         break;
       case 'chat-queue':
         var topic = event_bus.queue.topic
-        var payload = event_bus.queue.transaction
+        var payload = {transaction: event_bus.queue.transaction};
         payload['payload'] = req.payload
         break;
       default:

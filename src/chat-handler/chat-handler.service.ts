@@ -62,7 +62,7 @@ export class ChatHandlerService {
             this.doctorInfo = batch.messages[0].value.toString();
             this.createChat();
         }});
-
+        
     }
 
     // Metod for chat creation

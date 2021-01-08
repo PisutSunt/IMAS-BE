@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html>
     <header>
-        <script src="socket.io.js"></script>
+        <script src="../node_modules/socket.io-client/dist/socket.io.js"></script>
         <script>
-            const socket = io('http://localhost:3000');
+            // const io = require('socket.io-client');
+            // import { io } from 'socket.io-client';
+            const socket = io('ws://localhost:3000',
+            {
+                transport: ["websocket"],
+                auth: {
+                    token: "1234"
+                }
+            });
+            console.log(socket)
             socket.on('connect', function() {
                 console.log('Connected');
 
                 socket.emit('event', { transaction: 'chat-queue',
                                         payload: {
                                             name: 'PASUT',
-                                            role: 'doctor',
+                                            role: 'patientt',
                                             age: 35,
                                             gender: 'male'
                                         } });
